@@ -8,6 +8,45 @@ namespace HarcosProjekt
 {
     class Harcos
     {
+        private string nev, osztaly;
+        private int szint, tapasztalat, eletero, alapEletero, alapSebzes;
+        public Harcos(string nev, int statuszSablom)
+        {
+            switch (statuszSablom)
+            {
+                case 2:
+                    alapSebzes = 4;
+                    alapEletero = 12;
+                    osztaly = "Ijasz";
+                    break;
+                case 3:
+                    alapEletero = 8;
+                    alapSebzes = 5;
+                    osztaly = "Magus";
+                    break;
+                default:
+                    alapEletero = 15;
+                    alapSebzes = 3;
+                    osztaly = "Harcos";
+                    break;
+            }
+            this.nev = nev;
+            szint = 1;
+            tapasztalat = 0;
+            eletero = MaxEletero;
+        }
+
+        public string Nev { get => nev; set => nev = value; }
+
+        public string Osztaly { get => osztaly; }
+        public int Szint { get => szint; set => szint = value; }
+        public int Tapasztalat { get => tapasztalat; set => tapasztalat = value; }
+        public int AlapSebzes { get => alapSebzes; }
+        public int AlapEletero { get => alapEletero; }
+        public int Eletero { get => eletero; set => eletero = value; }
+        public int Sebzes { get => alapSebzes + szint; }
+        public int SzintLepeshez { get => 10 + szint * 5; }
+        public int MaxEletero { get => AlapEletero + szint * 3; }
 
     }
 }
