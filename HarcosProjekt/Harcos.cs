@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -46,11 +47,50 @@ namespace HarcosProjekt
         public string Nev { get => nev; set => nev = value; }
 
         public string Osztaly { get => osztaly; }
-        public int Szint { get => szint; set => szint = value; }
-        public int Tapasztalat { get => tapasztalat; set => tapasztalat = value; }
+        public int Szint
+        {
+            get => szint; set
+            {
+                if (szint+1 < value)
+                {
+                    szint = szint + 1;
+                }
+                else
+                {
+                    szint = value;
+                } } }
+        public int Tapasztalat
+        {
+            get => tapasztalat; set
+            {
+                if (tapasztalat >= SzintLepeshez)
+                {
+                    Szint++;
+                    tapasztalat = value;
+                }
+                else
+                {
+                    tapasztalat = value;
+                }
+            } }
         public int AlapSebzes { get => alapSebzes; }
         public int AlapEletero { get => alapEletero; }
-        public int Eletero { get => eletero; set => eletero = value; }
+        public int Eletero
+        {
+            get => eletero; set
+            {
+                if (eletero <= MaxEletero)
+                {
+                    eletero = value;
+                }
+                else if (eletero < 0)
+                {
+                    eletero = 0;
+                }
+                else
+                {
+                    eletero = MaxEletero;
+                } } }
         public int Sebzes { get => alapSebzes + szint; }
         public int SzintLepeshez { get => 10 + szint * 5; }
         public int MaxEletero { get => AlapEletero + szint * 3; }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,8 @@ namespace HarcosProjekt
         static void Main(string[] args)
         {
             Kezdes();
+            Menu();
+            Console.ReadKey();
         }
 
 
@@ -23,12 +26,12 @@ namespace HarcosProjekt
             Console.Write("Kerem adja meg a nevet a Harcosnak: ");
             string nev = Console.ReadLine();
             int valasz;
-            Console.WriteLine(" Udvozoljuk: "+ nev + "Valasz karakter osztalyt: \n\t (1)Haros: alapEletero = 15, alapSebzes = 3 \n\t (2)Ijasz: alapEletero = 12, alapSebzes = 4 \n\t (3)Magus: alapEletero = 8, alapSebzes = 5");
+            Console.WriteLine("Udvozoljuk: "+ nev + "Valasz karakter osztalyt: \n\t (1)Haros: alapEletero = 15, alapSebzes = 3 \n\t (2)Ijasz: alapEletero = 12, alapSebzes = 4 \n\t (3)Magus: alapEletero = 8, alapSebzes = 5");
             bool isNumber = Int32.TryParse(Console.ReadLine(),out valasz);
             while(!isNumber || valasz < 1 || valasz > 3)
             {
                 Console.Clear();
-                Console.WriteLine(" Udvozoljuk: " + nev + "Valasz karakter osztalyt: \n\t (1)Haros: alapEletero = 15, alapSebzes = 3 \n\t (2)Ijasz: alapEletero = 12, alapSebzes = 4 \n\t (3)Magus: alapEletero = 8, alapSebzes = 5");
+                Console.WriteLine("Udvozoljuk: " + nev + "Valasz karakter osztalyt: \n\t (1)Haros: alapEletero = 15, alapSebzes = 3 \n\t (2)Ijasz: alapEletero = 12, alapSebzes = 4 \n\t (3)Magus: alapEletero = 8, alapSebzes = 5");
                 if (!isNumber)
                 {
                     Console.WriteLine("Ez nem szam!");
@@ -40,6 +43,12 @@ namespace HarcosProjekt
                 isNumber = Int32.TryParse(Console.ReadLine(), out valasz);
             }
             jatekos = new Harcos(nev, valasz);
+        }
+
+        public static void Menu()
+        {
+            Console.Clear();
+            Console.WriteLine(jatekos);
         }
 
     }
