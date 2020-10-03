@@ -10,6 +10,13 @@ namespace HarcosProjekt
     {
         private string nev, osztaly;
         private int szint, tapasztalat, eletero, alapEletero, alapSebzes;
+
+
+        public override string ToString()
+        {
+            return string.Format($"{nev} –LVL:{szint} –EXP: {tapasztalat}/{SzintLepeshez} –HP: {eletero}/{MaxEletero} –DMG: {Sebzes} ");
+        }
+
         public Harcos(string nev, int statuszSablom)
         {
             switch (statuszSablom)
