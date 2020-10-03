@@ -8,7 +8,6 @@ namespace HarcosProjekt
 {
     class Harcos
     {
-asdas
 
     }
 }
