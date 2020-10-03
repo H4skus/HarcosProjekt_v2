@@ -68,20 +68,45 @@ namespace HarcosProjekt
                 }
                 else if (valasz == "h")
                 {
-                    gyogyitas();
+                    Gyogyul();
                 }
         }
-        public static void gyogyitas()
+        public static void Gyogyul()
         {
-
+            if (jatekos.Eletero == 0)
+            {
+                jatekos.Eletero = jatekos.MaxEletero;
+                Console.Clear();
+                Console.WriteLine("Teljesen meggyogyultal ");
+                Console.ReadKey();
+                Menu();
+            }
+            else if(jatekos.Eletero == jatekos.MaxEletero)
+            {
+                Console.Clear();
+                Console.WriteLine("Max hp-n vagy, nem tudsz gyogyulni! ");
+                Console.ReadKey();
+                Menu();
+            }
+            else
+            {
+                jatekos.Eletero += (3 + jatekos.Szint);
+                Console.Clear();
+                Console.WriteLine("Sikeresen gyogyitottal magadon " + (3+jatekos.Szint)+ "-t");
+                Console.ReadKey();
+                Menu();
+            }
         }
         public static void ellensegListazas()
         {
             int i = 1;
             foreach (Harcos item in ellensegek)
             {
-                Console.WriteLine(i+". "+item);
-                i++;
+                if (item.Eletero > 0)
+                {
+                    Console.WriteLine(i + ". " + item);
+                    i++;
+                }
             }
         }
 
