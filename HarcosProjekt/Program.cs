@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Diagnostics;
 
 namespace HarcosProjekt
 {
@@ -15,6 +16,7 @@ namespace HarcosProjekt
         static Harcos jatekos;
         static Harcos ellenseg;
         static List<Harcos> ellensegek = new List<Harcos>();
+        static int kor = 0;
 
         static void Main(string[] args)
         {
@@ -53,7 +55,7 @@ namespace HarcosProjekt
         {
             Console.Clear();
             Console.WriteLine(jatekos);
-            Console.WriteLine("Nyomj egy 'a'-t az ellensegek keresesehez, nyomj egy ''- a gyogitashoz, nyomj egy '' a kilepeshez");
+            Console.WriteLine("Nyomj egy 'a'-t az ellensegek keresesehez, nyomj egy 'h'- a gyogitashoz, nyomj egy 'f' a kilepeshez");
             string valasz = Console.ReadLine();
                 if (valasz == "a")
                 {
@@ -70,6 +72,15 @@ namespace HarcosProjekt
                 {
                     Gyogyul();
                 }
+            else if (valasz == "f")
+            {
+
+                Environment.Exit(0);
+            }
+            else
+            {
+                Console.WriteLine("Ilyen opcio nincs.");
+            }
         }
         public static void Gyogyul()
         {
@@ -105,15 +116,14 @@ namespace HarcosProjekt
                 if (item.Eletero > 0)
                 {
                     Console.WriteLine(i + ". " + item);
-                    i++;
                 }
+                i++;
             }
         }
 
         public static void ellensegFelvesz()
         {
             StreamReader sr = new StreamReader("harcosok.csv", Encoding.UTF8);
-            int i = 0;
             string sor = "";
             while (!sr.EndOfStream)
             {
@@ -165,11 +175,43 @@ namespace HarcosProjekt
                 Console.ReadKey();
                 ellenfelValasztas();
             }
+            harcol(valasz);
         }
 
-        public static void harcol()
+        public static void harcol(int valasztottEllenfel)
         {
-
+            ellensegek[valasztottEllenfel].Eletero -= jatekos.Sebzes;
+            ellenfelCheck(valasztottEllenfel);
+            jatekos.Eletero -= ellensegek[valasztottEllenfel].Sebzes;
+            jatekosCheck(valasztottEllenfel);
+            kor++;
+            Console.Clear();
+            Console.WriteLine(jatekos);
+            Console.WriteLine(ellensegek[valasztottEllenfel]);
+            if (kor == 4)
+            {
+                EllensegGyogyul();
+                kor = 1;
+            }
+            if (kor < 3)
+            {
+                Console.WriteLine("Nyomj egy gombot a tamadashoz...\n nyomj egy 'f'-et a menube valo kilepeshez");
+                string valasz = Console.ReadLine();
+                if (valasz == "f")
+                {
+                    Menu();
+                }
+                else
+                {
+                    harcol(valasztottEllenfel);
+                }
+            }
+            else
+            {
+                Random rnd = new Random();
+                harcol(rnd.Next(0,ellensegek.Count+1));
+            }
+            
         }
         public static bool eleteroCheck()
         {
@@ -182,5 +224,50 @@ namespace HarcosProjekt
             return false;
         }
 
+        public static void ellenfelCheck(int valasztottEllenfel)
+        {
+            if (ellensegek[valasztottEllenfel].Eletero > 0)
+            {
+                jatekos.Tapasztalat += 5;
+            }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("Az ellenfel meghalt ... ");
+                jatekos.Tapasztalat += 15;
+                Console.ReadKey();
+                Menu();
+            }
+        }
+        public static void jatekosCheck(int valasztottEllenfel)
+        {
+            if (jatekos.Eletero > 0)
+            {
+                ellensegek[valasztottEllenfel].Tapasztalat += 5;
+            }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("Meghaltal...");
+                ellensegek[valasztottEllenfel].Tapasztalat += 15;
+                Console.ReadKey();
+                Menu();
+            }
+        }
+
+        public static void EllensegGyogyul()
+        {
+            foreach (Harcos item in ellensegek)
+            {
+                if (item.Eletero == 0)
+                {
+                    item.Eletero = item.MaxEletero;
+                }
+                else
+                {
+                    item.Eletero = 3 + item.Szint;
+                }
+            }
+        }
     }
 }

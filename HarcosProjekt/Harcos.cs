@@ -87,6 +87,7 @@ namespace HarcosProjekt
                 }
                 else if (value < 0)
                 {
+                    tapasztalat = 0;
                     eletero = 0;
                 }
                 else
