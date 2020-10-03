@@ -10,7 +10,7 @@ namespace HarcosProjekt
     class Harcos
     {
         private string nev, osztaly;
-        private int szint, tapasztalat, eletero, alapEletero, alapSebzes;
+        private int szint, tapasztalat, eletero, alapEletero, alapSebzes, statuszSablon;
 
 
         public override string ToString()
@@ -18,9 +18,9 @@ namespace HarcosProjekt
             return string.Format($"{nev} –LVL:{szint} –EXP: {tapasztalat}/{SzintLepeshez} –HP: {eletero}/{MaxEletero} –DMG: {Sebzes} ");
         }
 
-        public Harcos(string nev, int statuszSablom)
+        public Harcos(string nev, int statuszSablon)
         {
-            switch (statuszSablom)
+            switch (statuszSablon)
             {
                 case 2:
                     alapSebzes = 4;
@@ -94,6 +94,7 @@ namespace HarcosProjekt
         public int Sebzes { get => alapSebzes + szint; }
         public int SzintLepeshez { get => 10 + szint * 5; }
         public int MaxEletero { get => AlapEletero + szint * 3; }
+        public int StatuszSablon { get => statuszSablon; set => statuszSablon = value; }
 
     }
 }

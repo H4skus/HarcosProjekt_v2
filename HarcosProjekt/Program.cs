@@ -5,6 +5,7 @@ using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace HarcosProjekt
 {
@@ -12,12 +13,14 @@ namespace HarcosProjekt
     {
 
         static Harcos jatekos;
+        static Harcos ellenseg;
+        static List<Harcos> ellensegek = new List<Harcos>();
 
         static void Main(string[] args)
         {
+            ellensegFelvesz();
             Kezdes();
             Menu();
-            Console.ReadKey();
         }
 
 
@@ -49,6 +52,50 @@ namespace HarcosProjekt
         {
             Console.Clear();
             Console.WriteLine(jatekos);
+            Console.WriteLine("Nyomj egy 'a'-t az ellensegek keresesehez, nyomj egy ''- a gyogitashoz, nyomj egy '' a kilepeshez");
+            string valasz = Console.ReadLine();
+                if (valasz == "a")
+                {
+                    ellensegListazas();
+                }
+                else if (valasz == "h")
+                {
+                    gyogyitas();
+                }
+        }
+        public static void gyogyitas()
+        {
+
+        }
+        public static void ellensegListazas()
+        {
+            foreach (Harcos item in ellensegek)
+            {
+                Console.WriteLine(item);
+            }
+            Console.WriteLine("Valaszd ki az ellenfeledet! F betuvel vissza mehetsz a menube..");
+            string valasz = Console.ReadLine();
+            if (valasz == "f")
+            {
+                Menu();
+            }
+        }
+
+        public static void ellensegFelvesz()
+        {
+            StreamReader sr = new StreamReader("harcosok.csv", Encoding.UTF8);
+            int i = 0;
+            string sor = "";
+            while (!sr.EndOfStream)
+            {
+                sor = sr.ReadLine();
+                string[] elemek = sor.Split(';');
+                ellenseg = new Harcos(elemek[0], Convert.ToInt32(elemek[1]));
+                ellenseg.Nev = elemek[0];
+                ellenseg.StatuszSablon = Convert.ToInt32(elemek[1]);
+                ellensegek.Add(ellenseg);
+            }
+            sr.Close();
         }
 
     }
