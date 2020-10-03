@@ -54,10 +54,12 @@ namespace HarcosProjekt
                 if (szint+1 < value)
                 {
                     szint = szint + 1;
+                    eletero = MaxEletero;
                 }
                 else
                 {
                     szint = value;
+                    eletero = MaxEletero;
                 } } }
         public int Tapasztalat
         {

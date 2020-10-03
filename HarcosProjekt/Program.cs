@@ -135,7 +135,12 @@ namespace HarcosProjekt
             }
             else
             {
-                harcol();
+                if (jatekos.Eletero > 0 || ellensegek[valasz].Eletero > 0)
+                {
+                    harcol();
+                }
+                Console.WriteLine("Az eleterod tul alacsony! ");
+                Menu();
             }
         }
 
