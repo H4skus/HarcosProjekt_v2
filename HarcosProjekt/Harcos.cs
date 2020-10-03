@@ -81,17 +81,17 @@ namespace HarcosProjekt
         {
             get => eletero; set
             {
-                if (eletero <= MaxEletero)
+                if (value > MaxEletero)
                 {
-                    eletero = value;
+                    eletero = MaxEletero;
                 }
-                else if (eletero < 0)
+                else if (value < 0)
                 {
                     eletero = 0;
                 }
                 else
                 {
-                    eletero = MaxEletero;
+                    eletero = value;
                 } } }
         public int Sebzes { get => alapSebzes + szint; }
         public int SzintLepeshez { get => 10 + szint * 5; }

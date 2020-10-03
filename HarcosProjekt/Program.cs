@@ -57,7 +57,14 @@ namespace HarcosProjekt
             string valasz = Console.ReadLine();
                 if (valasz == "a")
                 {
+                    if (eleteroCheck())
+                    {
+                    Menu();
+                    }
+                    else
+                    {
                     ellenfelValasztas();
+                    }
                 }
                 else if (valasz == "h")
                 {
@@ -133,20 +140,21 @@ namespace HarcosProjekt
                 Console.ReadKey();
                 ellenfelValasztas();
             }
-            else
-            {
-                if (jatekos.Eletero > 0 || ellensegek[valasz].Eletero > 0)
-                {
-                    harcol();
-                }
-                Console.WriteLine("Az eleterod tul alacsony! ");
-                Menu();
-            }
         }
 
         public static void harcol()
         {
 
+        }
+        public static bool eleteroCheck()
+        {
+            if (jatekos.Eletero <= 0)
+            {
+                Console.WriteLine("Az eleterod tul alacsony! ");
+                Console.ReadKey();
+                return true;
+            }
+            return false;
         }
 
     }
