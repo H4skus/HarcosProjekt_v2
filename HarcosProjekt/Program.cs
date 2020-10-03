@@ -21,6 +21,7 @@ namespace HarcosProjekt
             ellensegFelvesz();
             Kezdes();
             Menu();
+            ellenfelValasztas();
         }
 
 
@@ -56,7 +57,7 @@ namespace HarcosProjekt
             string valasz = Console.ReadLine();
                 if (valasz == "a")
                 {
-                    ellensegListazas();
+                    ellenfelValasztas();
                 }
                 else if (valasz == "h")
                 {
@@ -69,15 +70,11 @@ namespace HarcosProjekt
         }
         public static void ellensegListazas()
         {
+            int i = 1;
             foreach (Harcos item in ellensegek)
             {
-                Console.WriteLine(item);
-            }
-            Console.WriteLine("Valaszd ki az ellenfeledet! F betuvel vissza mehetsz a menube..");
-            string valasz = Console.ReadLine();
-            if (valasz == "f")
-            {
-                Menu();
+                Console.WriteLine(i+". "+item);
+                i++;
             }
         }
 
@@ -96,6 +93,55 @@ namespace HarcosProjekt
                 ellensegek.Add(ellenseg);
             }
             sr.Close();
+        }
+
+        public static void ellenfelValasztas()
+        {
+            Console.WriteLine(jatekos);
+            Console.WriteLine("valasszon ellenfelet");
+            ellensegListazas();
+            int valasz;
+            bool isNumber = Int32.TryParse(Console.ReadLine(), out valasz);
+            while (!isNumber || valasz < 0 || valasz > ellensegek.Count+1)
+            {
+                Console.Clear();
+                Console.WriteLine(jatekos);
+                Console.Write("valasszon ellenfelet");
+                if (!isNumber)
+                {
+                    Console.Clear();
+                    Console.WriteLine("Ez nem szam!");
+                    ellensegListazas();
+                }
+                else if (valasz < 0 || valasz > ellensegek.Count + 1)
+                {
+                    Console.Clear();
+                    Console.WriteLine(jatekos);
+                    Console.WriteLine("Ilyen szamhoz nem tartozik ellenfel");
+                }
+                isNumber = Int32.TryParse(Console.ReadLine(), out valasz);
+            }
+            valasz -= 1;
+            scan(valasz);
+
+        }
+        public static void scan(int valasz)
+        {
+            if (jatekos.Osztaly == ellensegek[valasz].Osztaly)
+            {
+                Console.WriteLine("Ez nem jo");
+                Console.ReadKey();
+                ellenfelValasztas();
+            }
+            else
+            {
+                harcol();
+            }
+        }
+
+        public static void harcol()
+        {
+
         }
 
     }
